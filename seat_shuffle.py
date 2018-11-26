@@ -11,7 +11,6 @@ class SeatShuffle:
         self.table2 = before_seats.split("\n")[1].split(" ")
         self.table3 = before_seats.split("\n")[2].split(" ")
 
-
     # 実際に動かすために呼ばれるためのメソッド
     def shuffle(self):
         seats = self._stay_seat()
@@ -53,22 +52,22 @@ class SeatShuffle:
 
     # _stay_seatで選ばれなかった人をランダムで決めるためのメソッド
     def _shuffle_decision(self):
-        # 前回の席のtableから別の席のtableに移るようにランダム(ここはtable1)
-        instead_table1 = random.sample(self.table2 + self.table3, 4)
+        # 前回の席のtableから別の席のtableに移るようにランダム(ここは席数が少ないtable3)
+        instead_table3 = random.sample(self.table1 + self.table2, 3)
         # 選択された分、tableに保存されいる人を削除していく
-        self.table2 = [a for a in self.table2 if a not in instead_table1]
-        self.table3 = [a for a in self.table3 if a not in instead_table1]
+        self.table1 = [a for a in self.table1 if a not in instead_table3]
+        self.table2 = [a for a in self.table2 if a not in instead_table3]
 
         # 上記と同様
         instead_table2 = random.sample(self.table1 + self.table3, 3)
         self.table1 = [a for a in self.table1 if a not in instead_table2]
         self.table3 = [a for a in self.table3 if a not in instead_table2]
 
-        # 場合によってはtable1とtable2ばかり上記のtableで選択された場合のためにここの部分は全tableから取得
-        instead_table3 = random.sample(self.table1 + self.table2 + self.table3, 3)
-        self.table1 = [a for a in self.table1 if a not in instead_table3]
-        self.table2 = [a for a in self.table2 if a not in instead_table3]
-        self.table3 = [a for a in self.table3 if a not in instead_table3]
+        # 場合によってはtable2とtable3ばかりが上記のtableで選択された場合のためにここの部分は全tableから取得
+        instead_table1 = random.sample(self.table1 + self.table2 + self.table3, 4)
+        self.table1 = [a for a in self.table1 if a not in instead_table1]
+        self.table2 = [a for a in self.table2 if a not in instead_table1]
+        self.table3 = [a for a in self.table3 if a not in instead_table1]
 
         return instead_table1, instead_table2, instead_table3
 
