@@ -2,38 +2,48 @@ from seat_shuffle import SeatShuffle
 
 
 def input_members():
-    with open("members.txt", "r")as f:
+    with open("members.txt", "r") as f:
         members = f.read().split("\n")
 
     member_counter = 0
+    input_seat = ""
 
-    while member_counter >= 15:
+    while member_counter < 15:
         if member_counter == 0:
             print("現在のテーブル1(6席)の配置を下記のメンバーの数字から入力してください")
 
         if member_counter == 6:
-            input_seat = input_seat + "\n"
+            input_seat = input_seat[:-1] + "\n"
             print("現在のテーブル2(5席)の配置を下記のメンバーの数字から入力してください")
 
-        if member_counter == 10:
-            input_seat = input_seat + "\n"
+        if member_counter == 11:
+            input_seat = input_seat[:-1] + "\n"
             print("現在のテーブル3(4席)の配置を下記のメンバーの数字から入力してください")
 
         for index in range(len(members)):
             print(f"{index}: {members[index]}")
 
-        input_seat = input_seat + " " + members[int(input())]
-        member_counter += 1
+        try:
+            input_index = int(input())
+            input_seat += members[input_index] + " "
+            members.pop(input_index)
+            member_counter += 1
+        except IndexError:
+            print("表示されている数字を入力してください\n")
+
+        except:
+            print("予期せぬエラーが発生しました。")
+            exit()
 
     with open("before_seat.txt", "w")as f:
-        f.write(str(input_seat))
+        f.write(input_seat[:-1])
 
 
 def main():
     with open("before_seat.txt", "r") as f:
         before_seat = f.read()
 
-    if before_seat == "":
+    if len(before_seat) == 0:
         input_members()
 
     seat = SeatShuffle()
