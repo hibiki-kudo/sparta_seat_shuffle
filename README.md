@@ -1,4 +1,4 @@
-# sparta_seat_shuffle
+# sparta seat shuffle
 ---------------------------------
 スパルタキャンプ-python編で席替えを簡単に行えるようにするアプリ
 
